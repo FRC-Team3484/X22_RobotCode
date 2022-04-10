@@ -21,13 +21,13 @@
 #include "networktables/NetworkTableValue.h"
 
 
-class SC_Launcher
+class X22_Launcher
 {
 public:
-	SC_Launcher(int CenterID, int OuterID, int TurretID,
+	X22_Launcher(int CenterID, int OuterID, int TurretID,
 				int TurretLSMin_Ch, int TurretLSMax_Ch,
 				SC::SC_Solenoid loader, SC::SC_Solenoid AngleCrt);
-	~SC_Launcher();
+	~X22_Launcher();
 
 	/**
 	 * Brief Runs through the utomated targeting and luanhc seqenuce

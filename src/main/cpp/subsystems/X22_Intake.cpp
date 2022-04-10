@@ -1,4 +1,4 @@
-#include "subsystems/SC_Intake.h"
+#include "subsystems/X22_Intake.h"
 
 #include "Constants.h"
 #include "Globals.h"
@@ -11,7 +11,7 @@ using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
 
 
-SC_Intake::SC_Intake(int IntakeID, int FeedID_Master, int FeedID_Slave, int LoaderRS_Ch, 
+X22_Intake::X22_Intake(int IntakeID, int FeedID_Master, int FeedID_Slave, int LoaderRS_Ch, 
 	SC_Solenoid Sol, int FeederSw_Ch,
 	frc::I2C::Port ColorSenPort)
 {
@@ -54,7 +54,7 @@ SC_Intake::SC_Intake(int IntakeID, int FeedID_Master, int FeedID_Slave, int Load
 }
 
 
-SC_Intake::~SC_Intake()
+X22_Intake::~X22_Intake()
 {
 	if(Motor_Intake_Master != NULL) { delete Motor_Intake_Master; }
 	if(Motor_Feed_Master != NULL) {delete Motor_Feed_Master; }
@@ -79,7 +79,7 @@ SC_Intake::~SC_Intake()
 	if(this->_filter_color_sen != NULL) { delete this->_filter_color_sen; }
 }
 
-void SC_Intake::Collect(bool Run, bool ForceFeed, bool ForceEject)
+void X22_Intake::Collect(bool Run, bool ForceFeed, bool ForceEject)
 {
 	bool intakeOut, intakeForward, intakeReverse, feederForward, feederReverse;
 	double intakeSpeed, feederSpeed;
@@ -124,7 +124,7 @@ void SC_Intake::Collect(bool Run, bool ForceFeed, bool ForceEject)
 	this->_updateDashboard();
 }
 
-bool SC_Intake::IsCargoLoaded()
+bool X22_Intake::IsCargoLoaded()
 {
 	bool switchState; // Save the state of the input at the time of this function call (pre-debounced)
 	static bool switchOut; // Remember the state of switch out within the context of this function
@@ -150,7 +150,7 @@ bool SC_Intake::IsCargoLoaded()
 	return switchOut;
 }
 
-bool SC_Intake::IsCargoStored()
+bool X22_Intake::IsCargoStored()
 {
 	bool switchState = false; // Save the state of the input at the time of this function call (pre-debounced)
 	static bool switchOut = false; // Remember the state of switch out within the context of this function
@@ -169,7 +169,7 @@ bool SC_Intake::IsCargoStored()
 	return switchOut;
 }
 
-bool SC_Intake::IsLoaderDown()
+bool X22_Intake::IsLoaderDown()
 {
 	if(this->_di_loader_rsw != NULL)
 	{
@@ -179,7 +179,7 @@ bool SC_Intake::IsLoaderDown()
 	else { return true; } // If the switch is NULL, assume the loader is always down
 }
 
-void SC_Intake::_initDashboard()
+void X22_Intake::_initDashboard()
 {
 	this->_nt_inst = NetworkTableInstance::GetDefault();
 	this->_nt_table = this->_nt_inst.GetTable("X22");
@@ -190,7 +190,7 @@ void SC_Intake::_initDashboard()
 	this->_nt_table->PutBoolean("Cargo Loaded", false);
 }
 
-void SC_Intake::_updateDashboard()
+void X22_Intake::_updateDashboard()
 {
 	this->_nt_table->PutNumber("Color Sen Dist", this->_color_dist_pvf);
 	this->_nt_table->PutBoolean("Cargo Stored", this->IsCargoStored());

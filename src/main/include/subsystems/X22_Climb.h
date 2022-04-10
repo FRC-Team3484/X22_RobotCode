@@ -9,14 +9,14 @@
 #include "frc/Solenoid.h"
 #include "frc/filter/Debouncer.h"
 
-class SC_Climb
+class X22_Climb
 {
     public:
-        SC_Climb(SC::SC_Solenoid Stage1_Ext, SC::SC_Solenoid Stage1_Grab, 
+        X22_Climb(SC::SC_Solenoid Stage1_Ext, SC::SC_Solenoid Stage1_Grab, 
                     SC::SC_Solenoid Stage2_Ext, SC::SC_Solenoid Stage2_Grab,
                     std::tuple<int, int> Stage2_AdjustID); 
 
-        ~SC_Climb();
+        ~X22_Climb();
 
         void Periodic(bool Stage1_Ext, bool Stage1_Claw, bool Stage2_Ext, bool Stage2_Claw);
 

@@ -1,4 +1,4 @@
-#include "subsystems/SC_climb.h"
+#include "subsystems/X22_Climb.h"
 
 #include "Constants.h"
 
@@ -8,7 +8,7 @@ using namespace std;
 using namespace ctre::phoenix::motorcontrol::can;
 using namespace ctre::phoenix::motorcontrol;
 
-SC_Climb::SC_Climb(SC_Solenoid Stage1_Ext, SC_Solenoid Stage1_Grab, SC_Solenoid Stage2_Ext, SC_Solenoid Stage2_Grab, tuple<int, int> Stage2_AdjustID)
+X22_Climb::X22_Climb(SC_Solenoid Stage1_Ext, SC_Solenoid Stage1_Grab, SC_Solenoid Stage2_Ext, SC_Solenoid Stage2_Grab, tuple<int, int> Stage2_AdjustID)
 {
     this-> _stage1_ext = new Solenoid(Stage1_Ext.CtrlID, Stage1_Ext.CtrlType, Stage1_Ext.Channel);
     this-> _stage1_grab = new Solenoid(Stage1_Grab.CtrlID, Stage1_Grab.CtrlType, Stage1_Grab.Channel);
@@ -73,7 +73,7 @@ SC_Climb::SC_Climb(SC_Solenoid Stage1_Ext, SC_Solenoid Stage1_Grab, SC_Solenoid 
 
 }
 
-SC_Climb::~SC_Climb()
+X22_Climb::~X22_Climb()
 {
     if(this-> _stage1_ext  != NULL) {delete this->_stage1_ext; }
     if(this-> _stage1_grab != NULL) {delete this->_stage1_grab; }
@@ -95,7 +95,7 @@ SC_Climb::~SC_Climb()
 
 }
 
-void SC_Climb::Periodic(bool Stage1_Ext, bool Stage1_Claw, bool Stage2_Ext, bool Stage2_Claw)
+void X22_Climb::Periodic(bool Stage1_Ext, bool Stage1_Claw, bool Stage2_Ext, bool Stage2_Claw)
 {
 #ifndef CLIMB_INPUTS_AS_SEQUENCE
 
@@ -127,7 +127,7 @@ void SC_Climb::Periodic(bool Stage1_Ext, bool Stage1_Claw, bool Stage2_Ext, bool
     {
         if((this->_dbnc_s1e != NULL) && (this->_dbnc_s1e != NULL)) // && (this->_dbnc_s2e != NULL) && (this->_dbnc_s2c != NULL))
         {
-            bool s1e, s1c, s2e, s2c;
+            bool s1e, s1c;//, s2e, s2c;
 
             s1e = this->_dbnc_s1e->Calculate(Stage1_Ext);
             s1c = this->_dbnc_s1c->Calculate(Stage1_Claw);
@@ -228,7 +228,7 @@ void SC_Climb::Periodic(bool Stage1_Ext, bool Stage1_Claw, bool Stage2_Ext, bool
 
 }
 
-void SC_Climb::SetSequence(int val)
+void X22_Climb::SetSequence(int val)
 {
     this->_nextstate = val;
 }

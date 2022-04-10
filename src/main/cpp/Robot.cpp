@@ -35,21 +35,21 @@ void Robot::RobotInit()
 	JS_Climb = new Joystick(C_CLIMB_USB);
 #endif
 
-	_drivetrain = new Drivetrain(C_X22_TRACK_WIDTH, 14_fps, 90_deg_per_s,
+	_drivetrain = new X22_Drivetrain(C_X22_TRACK_WIDTH, 14_fps, 90_deg_per_s,
 						std::make_tuple<int, int>(C_FX_LEFT_MASTER, C_FX_LEFT_SLAVE),
 						std::make_tuple<int, int>(C_FX_RIGHT_MASTER, C_FX_RIGHT_SLAVE),
 						SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_DRIVE_SOL});
 
-	_intake = new SC_Intake(C_SPX_INTAKE, C_SPX_FEED_MASTER, C_SPX_FEED_SLAVE, C_DI_CH_LOADER_DOWN_SW,
+	_intake = new X22_Intake(C_SPX_INTAKE, C_SPX_FEED_MASTER, C_SPX_FEED_SLAVE, C_DI_CH_LOADER_DOWN_SW,
 							SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_INTAKE},
 							C_DI_CH_STORED_SW, frc::I2C::Port::kOnboard);
 
-	_launcher = new SC_Launcher(C_FX_LAUNCH_1, C_FX_LAUNCH_2, C_SPX_TURRET,
+	_launcher = new X22_Launcher(C_FX_LAUNCH_1, C_FX_LAUNCH_2, C_SPX_TURRET,
 								C_DI_CH_TURRET_LS_MIN, C_DI_CH_TURRET_LS_MAX,
 								SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_LOADER},
 								SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_LAUNCH_ANGLE});
 
-	_climb = new SC_Climb(  SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_CLIMB_VERT_UD}, 
+	_climb = new X22_Climb(  SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_CLIMB_VERT_UD}, 
 							SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_CLIMB_VERT_CLAW}, 
 							SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_CLIMB_2ND_STAGE_UD}, 
 							SC::SC_Solenoid{C_PCM, frc::PneumaticsModuleType::REVPH, C_SOL_CLIMB_2ND_STAGE_CLAW},
@@ -119,7 +119,7 @@ void Robot::AutonomousPeriodic()
 {
 	//	_tmr_taxi_time->Start();
 	
-		_launch =_dbnc_taxi_time->Calculate(true); // Start the timer as soon as autonomous starts.
+		_launch = _dbnc_taxi_time->Calculate(true); // Start the timer as soon as autonomous starts.
 		_drivetrain->Drive(0.3, 0.0, false, !_launch); // Drive away from the goal at half speed until the timer finishes.
 
 		_launcher->Periodic(false, 0.0, false, _launch, false); // Launch the ball using the manual, short-range launch input once the timer finishes. 
@@ -133,21 +133,6 @@ void Robot::AutonomousPeriodic()
 		}*/
 	
 }
-//Neel Wrote this
-/*
-void Robot::AutonomousPeriodic()
-{
-	_tmr_taxi_time->Start();
-
-	_launch = _tmr_taxi_time->HasPeriodPassed(C_AUTO_TAXI_TIME);
-	_drivetrain->Drive(0.5, 0.0, false, !_launch); 
-
-	_launcher->Periodic(false, 0.0, false, _launch, false);
-	
-	_tmr_taxi_time->Stop();
-}
-*/
-
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when

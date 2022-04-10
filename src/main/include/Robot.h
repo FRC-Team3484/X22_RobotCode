@@ -11,10 +11,10 @@
 
 #include "RobotContainer.h"
 
-#include "subsystems/SC_drivetrain.h"
-#include "subsystems/SC_Intake.h"
-#include "subsystems/SC_Launcher.h"
-#include "subsystems/SC_Climb.h"
+#include "subsystems/X22_drivetrain.h"
+#include "subsystems/X22_Intake.h"
+#include "subsystems/X22_Launcher.h"
+#include "subsystems/X22_Climb.h"
 
 #include <frc/XboxController.h>
 #include <frc/Joystick.h>
@@ -24,7 +24,6 @@
 #include <frc/PowerDistribution.h>
 
 #include <frc/Timer.h>
-
 
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableValue.h>
@@ -64,10 +63,10 @@ private:
 	frc::PneumaticHub *pch;
 	frc::PowerDistribution *pdp;
 
-	Drivetrain *_drivetrain;
-	SC_Intake *_intake;
-	SC_Launcher *_launcher;
-	SC_Climb *_climb;
+	X22_Drivetrain *_drivetrain;
+	X22_Intake *_intake;
+	X22_Launcher *_launcher;
+	X22_Climb *_climb;
 
 	SC::SC_Range<double> Throttle_Range_Normal;
 	SC::SC_Range<double> Throttle_Range_Fine;

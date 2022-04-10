@@ -21,14 +21,14 @@
 #include "networktables/NetworkTableValue.h"
 
 
-class SC_Intake
+class X22_Intake
 {
 
 public:
-	SC_Intake(int IntakeID, int FeedID_Master, int FeedID_Slave, int LoaderRS_Ch, 
+	X22_Intake(int IntakeID, int FeedID_Master, int FeedID_Slave, int LoaderRS_Ch, 
 	SC::SC_Solenoid Sol, int FeederSw_Ch,
 	frc::I2C::Port ColorSenPort);
-	~SC_Intake();
+	~X22_Intake();
 
 	void Collect(bool Intake, bool ForceFeed, bool ForceEject);
 

@@ -22,24 +22,22 @@
 #include "frc/kinematics/DifferentialDriveOdometry.h"
 
 #include "frc/Solenoid.h"
-//#include "frc/DoubleSolenoid.h"
 
 #include "networktables/NetworkTableInstance.h"
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableValue.h"
 
-class Drivetrain
+class X22_Drivetrain
 {
 public:
-	Drivetrain();
-	Drivetrain(units::length::inch_t trackwidth,
+	X22_Drivetrain(units::length::inch_t trackwidth,
 				units::velocity::feet_per_second_t MaxVel,
 				units::angular_velocity::degrees_per_second_t MaxRotVel,
 				std::tuple<int, int> LeftIDs, std::tuple<int, int> RightIDs,
 				SC::SC_Solenoid shifter);
 
 
-	~Drivetrain();
+	~X22_Drivetrain();
 
 	void Drive(double Throttle, double Rotation, bool ShiftOverride, bool EBrake);
 

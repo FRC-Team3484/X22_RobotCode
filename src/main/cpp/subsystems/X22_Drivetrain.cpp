@@ -1,4 +1,4 @@
-#include "subsystems/SC_drivetrain.h"
+#include "subsystems/X22_Drivetrain.h"
 
 #include "units/math.h"
 
@@ -11,12 +11,8 @@ using namespace units::angular_velocity;
 using namespace ctre::phoenix::motorcontrol::can;
 using namespace ctre::phoenix::motorcontrol;
 
-Drivetrain::Drivetrain()
-{
-    // drive = new SC_DifferentialDrive(1_in, 1_fps, 1_deg_per_s);
-}
 
-Drivetrain::Drivetrain(inch_t trackwidth, feet_per_second_t MaxTangVel, degrees_per_second_t MaxRotVel,
+X22_Drivetrain::X22_Drivetrain(inch_t trackwidth, feet_per_second_t MaxTangVel, degrees_per_second_t MaxRotVel,
                         std::tuple<int, int> LeftIDs, std::tuple<int, int> RightIDs, SC_Solenoid Shifter)
 {
 	// drive = new SC_DifferentialDrive(trackwidth, MaxTangVel, MaxRotVel);
@@ -69,7 +65,7 @@ Drivetrain::Drivetrain(inch_t trackwidth, feet_per_second_t MaxTangVel, degrees_
 	else { _shifter = NULL; }
 }
 
-Drivetrain::~Drivetrain()
+X22_Drivetrain::~X22_Drivetrain()
 {
 	if(drive != NULL) { delete drive; }
 	if(ddKinematics != NULL) { delete ddKinematics; }
@@ -96,7 +92,7 @@ Drivetrain::~Drivetrain()
 	// if(ntChassisOmega != NULL) { delete ntChassisOmega; }
 }
 
-void Drivetrain::Drive(double Throttle, double Rotation, bool ShiftOverride, bool EBrake)
+void X22_Drivetrain::Drive(double Throttle, double Rotation, bool ShiftOverride, bool EBrake)
 {
 	this->throttleCoeff = this->_nt_table->GetNumber("Throttle Scale Coeff", C_THROTTLE_SCALE_COEFF);
 
@@ -156,7 +152,7 @@ void Drivetrain::Drive(double Throttle, double Rotation, bool ShiftOverride, boo
 	}
 }
 
-void Drivetrain::Shift(bool shiftLow, bool shiftHigh)
+void X22_Drivetrain::Shift(bool shiftLow, bool shiftHigh)
 {
 	if(_shifter != NULL)
 	{
@@ -167,14 +163,14 @@ void Drivetrain::Shift(bool shiftLow, bool shiftHigh)
 	inHighGear = shiftHigh;
 }
 
-double Drivetrain::_CalcWheelVelocity(double counts)
+double X22_Drivetrain::_CalcWheelVelocity(double counts)
 {
 	if(this->inLowGear) { return counts * C_DT_SCALE_FACTOR_LO; }
 	else if (this->inHighGear) { return counts * C_DT_SCALE_FACTOR_HI; }	
 	else{ return 0; }
 }
 
-void Drivetrain::_UpdateDashboard()
+void X22_Drivetrain::_UpdateDashboard()
 {
 	this->_nt_table->PutNumber("Left Velocity", units::convert<meters_per_second, feet_per_second>(ws_PVf.left).value());
 	this->_nt_table->PutNumber("Right Velocity", units::convert<meters_per_second, feet_per_second>(ws_PVf.right).value());
@@ -202,7 +198,7 @@ void Drivetrain::_UpdateDashboard()
 	// if(ntRightCurrent != NULL) { ntRightCurrent->SetNumber(Motor_Right_Master->GetOutputCurrent()); }
 }
 
-void Drivetrain::_InitDashboard()
+void X22_Drivetrain::_InitDashboard()
 {
     this->_nt_inst = NetworkTableInstance::GetDefault();
     this->_nt_table = this->_nt_inst.GetTable("X22");
@@ -233,7 +229,7 @@ void Drivetrain::_InitDashboard()
 	//ntThrottleScale = DebugDash->AddEntry<double>("Throttle Scale Coeff", C_THROTTLE_SCALE_COEFF);
 }
 
-void Drivetrain::_InitMotor(WPI_TalonFX* Motor, bool Invert, WPI_TalonFX* Master)
+void X22_Drivetrain::_InitMotor(WPI_TalonFX* Motor, bool Invert, WPI_TalonFX* Master)
 {
 	if(Motor != NULL)
 	{
@@ -248,7 +244,7 @@ void Drivetrain::_InitMotor(WPI_TalonFX* Motor, bool Invert, WPI_TalonFX* Master
 	}
 }
 
-void Drivetrain::SetBrakeMode()
+void X22_Drivetrain::SetBrakeMode()
 {
 	if(this->Motor_Left_Master != NULL) { this->Motor_Left_Master->SetNeutralMode(NeutralMode::Brake); }
 	if(this->Motor_Left_Slave != NULL) { this->Motor_Left_Slave->SetNeutralMode(NeutralMode::Brake); }
@@ -256,7 +252,7 @@ void Drivetrain::SetBrakeMode()
 	if(this->Motor_Right_Slave != NULL) { this->Motor_Right_Slave->SetNeutralMode(NeutralMode::Brake); }
 }
 
-void Drivetrain::SetCoastMode()
+void X22_Drivetrain::SetCoastMode()
 {
 	if(this->Motor_Left_Master != NULL) { this->Motor_Left_Master->SetNeutralMode(NeutralMode::Coast); }
 	if(this->Motor_Left_Slave != NULL) { this->Motor_Left_Slave->SetNeutralMode(NeutralMode::Coast); }

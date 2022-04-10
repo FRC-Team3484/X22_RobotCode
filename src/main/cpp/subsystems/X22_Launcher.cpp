@@ -1,4 +1,4 @@
-#include "subsystems/SC_Launcher.h"
+#include "subsystems/X22_Launcher.h"
 #include "Constants.h"
 #include "Globals.h"
 
@@ -10,7 +10,7 @@ using namespace nt;
 using namespace ctre::phoenix::motorcontrol::can;
 using namespace ctre::phoenix::motorcontrol;
 
-SC_Launcher::SC_Launcher(int CenterID, int OuterID, int TurretID, int TurretLSMin_Ch, int TurretLSMax_Ch, SC::SC_Solenoid Loader, SC::SC_Solenoid AngleCtrl)
+X22_Launcher::X22_Launcher(int CenterID, int OuterID, int TurretID, int TurretLSMin_Ch, int TurretLSMax_Ch, SC::SC_Solenoid Loader, SC::SC_Solenoid AngleCtrl)
 {
 	_launch_motor_center = new TalonFX(CenterID);
 	_launch_motor_outer = new TalonFX(OuterID);
@@ -84,7 +84,7 @@ SC_Launcher::SC_Launcher(int CenterID, int OuterID, int TurretID, int TurretLSMi
 	_initDashboard();
 }
 
-SC_Launcher::~SC_Launcher()
+X22_Launcher::~X22_Launcher()
 { 
 	if(_launch_motor_center != NULL) {delete _launch_motor_center; }
 	if(_launch_motor_outer != NULL) {delete _launch_motor_outer; }
@@ -112,7 +112,7 @@ SC_Launcher::~SC_Launcher()
 
 }
 
-void SC_Launcher::Periodic(bool Run, double TurretVel, bool LongLaunch, bool ShortLaunch, bool Eject)
+void X22_Launcher::Periodic(bool Run, double TurretVel, bool LongLaunch, bool ShortLaunch, bool Eject)
 {
 	//
 	// _updateNTEntries();
@@ -183,16 +183,16 @@ void SC_Launcher::Periodic(bool Run, double TurretVel, bool LongLaunch, bool Sho
 	_UpdateDashboard();
 }
 
-void SC_Launcher::SetCenterPIDTune(SC_PIDConstants PIDC)
+void X22_Launcher::SetCenterPIDTune(SC_PIDConstants PIDC)
 {
 	if(this->_center_PID != NULL) { this->_center_PID->SetPIDConstants(PIDC); }
 }
-void SC_Launcher::SetOuterPIDTune(SC_PIDConstants PIDC)
+void X22_Launcher::SetOuterPIDTune(SC_PIDConstants PIDC)
 {
 	if(this->_outer_PID != NULL) { this->_outer_PID->SetPIDConstants(PIDC); }
 }
 
-bool SC_Launcher::IsTurretAtMin()
+bool X22_Launcher::IsTurretAtMin()
 {
 	if((_ls_turret_travel_min != NULL) && (_dbnc_re_turret_min != NULL)) 
 	{ 
@@ -201,7 +201,7 @@ bool SC_Launcher::IsTurretAtMin()
 	else { return false; }
 }
 
-bool SC_Launcher::IsTurretAtMax()
+bool X22_Launcher::IsTurretAtMax()
 {
 	if((_ls_turret_travel_max != NULL) && (_dbnc_re_turret_max != NULL)) 
 	{ 
@@ -214,7 +214,7 @@ bool SC_Launcher::IsTurretAtMax()
 /* Private Functions */
 /*===================*/
 
-void SC_Launcher::_TrackTarget()
+void X22_Launcher::_TrackTarget()
 {
 	bool __stopTurret;
 	if(_en_autoLaunch && (_vision != NULL) && (_turret_motor != NULL))
@@ -267,7 +267,7 @@ void SC_Launcher::_TrackTarget()
 	}
 }
 
-void SC_Launcher::_SpoolFlywheel()
+void X22_Launcher::_SpoolFlywheel()
 {	
 	if((_center_PID != NULL) && (_outer_PID != NULL))
 	{
@@ -390,7 +390,7 @@ void SC_Launcher::_SpoolFlywheel()
 						  //|| ((_en_manLaunch || _en_manEject) && F_IsInRange_Offs(_launch_out_pv, _launch_out_sp, C_LAUNCH_OUT_READY_BAND));	// Manual mode
 }
 
-void SC_Launcher::_initDashboard()
+void X22_Launcher::_initDashboard()
 {
 	this->_nt_inst = NetworkTableInstance::GetDefault();
 	this->_nt_table = this->_nt_inst.GetTable("X22");
@@ -436,7 +436,7 @@ void SC_Launcher::_initDashboard()
 	this->_nt_table->PutNumber("LO_Ki", C_LAUNCH_OUT_DEFAULT_KI);
 }
 
-void SC_Launcher::_UpdateDashboard()
+void X22_Launcher::_UpdateDashboard()
 {
 	this->_nt_table->PutBoolean("Launcher Inner Ready", _center_wheel_ready);
 	this->_nt_table->PutBoolean("Launcher Outer Ready", _outer_wheel_ready);
@@ -472,7 +472,7 @@ void SC_Launcher::_UpdateDashboard()
 
 }
 
-void SC_Launcher::_updateNTEntries()
+void X22_Launcher::_updateNTEntries()
 {
 	this->_turretKp = this->_nt_table->GetNumber("Turret Kp", C_TURRET_DEFAULT_KP);
 	this->_turretKi = this->_nt_table->GetNumber("Turret Ki", C_TURRET_DEFAULT_KI);
