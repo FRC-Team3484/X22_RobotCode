@@ -55,7 +55,7 @@ X22_Drivetrain::X22_Drivetrain(inch_t trackwidth, feet_per_second_t MaxTangVel, 
 	
 	drive = new DifferentialDrive(*Motor_Left_Master, *Motor_Right_Master);
 	ddKinematics = new DifferentialDriveKinematics(trackwidth);
-	ddOdometry = new DifferentialDriveOdometry(frc::Rotation2d{0_deg});
+	ddOdometry = new DifferentialDriveOdometry(frc::Rotation2d{0_deg}, 0_m, 0_m);
 
 	if(Shifter.Channel != -1) 
 	{

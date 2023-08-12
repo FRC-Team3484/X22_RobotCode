@@ -2,7 +2,7 @@
 
 #include <hal/FRCUsageReporting.h>
 #include <cmath>
-#include <wpi/numbers>
+#include <numbers>
 
 using namespace SC;
 using namespace frc;

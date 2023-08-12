@@ -157,13 +157,13 @@ namespace SC
 	class SC_ABFilterU
 	{
 	public:
-		SC_ABFilterU<T>(units::time::second_t FilterTime, units::time::second_t ScanTime)
+		SC_ABFilterU(units::time::second_t FilterTime, units::time::second_t ScanTime)
 		{
 			this->_tau = FilterTime.value();
 			this->_scanT = ScanTime.value();
 		}
 
-		~SC_ABFilterU<T>()
+		~SC_ABFilterU()
 		{
 			;
 		}
@@ -201,13 +201,13 @@ namespace SC
 	class SC_ABFilter
 	{
 	public:
-		SC_ABFilter<T>(units::time::second_t FilterTime, units::time::second_t ScanTime)
+		SC_ABFilter(units::time::second_t FilterTime, units::time::second_t ScanTime)
 		{
 			this->_tau = FilterTime.value();
 			this->_scanT = ScanTime.value();
 		}
 
-		~SC_ABFilter<T>()
+		~SC_ABFilter()
 		{
 			;
 		}
@@ -235,6 +235,60 @@ namespace SC
 		double _tau, _scanT;
 		double _alpha, _beta;
 		T PV_out;
+
+	};
+
+		/*
+		Discrete Edge Detection Triggers
+	*/
+
+	/**
+	 * @brief   Rising edge trigger. Takes boolean input signal, CLK,
+	 *          in function call. The output, Q, will be TRUE for a single
+	 *          evaluation when CLK goes from FALSE to TRUE. 
+	 *          
+	 *          Q will return to false on the next subsequent call.
+	 */
+	class R_TRIG
+	{
+	public:
+		R_TRIG() { lastState = false; };
+
+		void Check(bool CLK) 
+		{ 
+			this->Q = CLK && !this->lastState;
+			this->lastState = CLK;
+		}
+
+		bool Q;
+
+	private:
+		bool state, lastState;
+
+	};
+
+	/**
+	 * @brief   Falling edge trigger. Takes boolean input signal, CLK,
+	 *          in function call. The output, Q, will be TRUE for a single
+	 *          evaluation when CLK goes from TRUE to FALSE. 
+	 * 
+	 *          Q will return to false on the next subsequent call.
+	 */
+	class F_TRIG
+	{
+	public:
+		F_TRIG() { lastState = false; };
+
+		void Check(bool CLK) 
+		{ 
+			this->Q = !CLK && this->lastState;
+			this->lastState = CLK;
+		}
+
+		bool Q;
+
+	private:
+		bool lastState;
 
 	};
 }

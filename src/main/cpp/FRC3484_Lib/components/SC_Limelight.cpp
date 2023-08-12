@@ -1,7 +1,7 @@
 #include "FRC3484_Lib/components/SC_Limelight.h"
 
 #include <cmath>
-#include "wpi/numbers"
+#include "numbers"
 
 using namespace SC;
 using namespace nt;
@@ -71,7 +71,7 @@ double SC_Limelight::GetBBHeight()
 
 double SC_Limelight::GetDistanceFromTarget()
 {
-	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * (wpi::numbers::pi_v<double> / 180.0));
+	return (this->targetHeight - this->lensHeight) / tan((this->angle + this->GetOffsetY()) * (std::numbers::pi_v<double> / 180.0));
 }
 
 int SC_Limelight::GetActivePipeline()

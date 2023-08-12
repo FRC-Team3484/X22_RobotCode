@@ -2,7 +2,6 @@
 #define SC_Climb_h
 
 #include "FRC3484_Lib/utils/SC_Datatypes.h"
-#include "FRC3484_Lib/utils/TC3_Syntax.h"
 
 #include "ctre/phoenix/motorcontrol/can/TalonSRX.h"
 
@@ -38,7 +37,7 @@ class X22_Climb
 
     bool stage1_ext_state, stage1_claw_state, stage2_ext_state, stage2_claw_state;
 
-    R_TRIG *rTrig_s1e, *rTrig_s1c, *rTrig_s2e, *rTrig_s2c;
+    SC::R_TRIG *rTrig_s1e, *rTrig_s1c, *rTrig_s2e, *rTrig_s2c;
     frc::Debouncer *_dbnc_s1e, *_dbnc_s1c, *_dbnc_s2e, *_dbnc_s2c;
 
 };

@@ -4,7 +4,7 @@
 #include "units/angle.h"
 #include "ctre/phoenix/motorcontrol/can/TalonSRX.h"
 #include "FRC3484_Lib/utils/SC_Datatypes.h"
-#include <frc/drive/Vector2d.h>
+#include "frc/geometry/Translation2d.h"
 #include <frc/kinematics/MecanumDriveWheelSpeeds.h>
 #include <frc/kinematics/ChassisSpeeds.h>
 #include <frc/kinematics/MecanumDriveKinematics.h>
@@ -48,6 +48,7 @@ namespace SC
         
         frc::MecanumDriveOdometry odometry{ kinematics, 
                                             frc::Rotation2d{0_rad}, 
+                                            frc::MecanumDriveWheelPositions{0_m, 0_m, 0_m, 0_m},
                                             frc::Pose2d{0_m, 0_m, 0_rad}};
 
         units::meters_per_second_t maxWheelSpeed = 5.0_mps;

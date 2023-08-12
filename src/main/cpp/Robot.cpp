@@ -22,11 +22,11 @@ void Robot::RobotInit()
 {
 	// Clear out the network table
 	this->_nt_table = nt::NetworkTableInstance::GetDefault().GetTable("X22");
-	std::vector<std::string> entries = _nt_table->GetKeys();
-	for(unsigned int i = 0; i < entries.size(); i++)
-	{
-		_nt_table->Delete(entries.at(i));
-	}
+	// std::vector<std::string> entries = _nt_table->GetKeys();
+	// for(unsigned int i = 0; i < entries.size(); i++)
+	// {
+	// 	_nt_table->(entries.at(i));
+	// }
 
 	// Initialize Controllers
 	GP1_Driver = new XboxController(C_DRIVER_USB);

@@ -147,20 +147,20 @@ namespace SC
     }
 
     template<class T1, class T2>
-    T2 F_Scale(SC_Range<T1> InRange, T2 OutMin, T2 OutMax, T1 fin)
+    T2 F_Scale(SC_Range<T1> &InRange, T2 OutMin, T2 OutMax, T1 fin)
     {
         return SC::F_Scale(InRange.Val_min, InRange.Val_max, OutMin, OutMax, fin);
     }
 
 
     template<class T1, class T2>
-    T2 F_Scale(T1 InMin, T1 InMax, SC_Range<T2> OutRange, T1 fin)
+    T2 F_Scale(T1 InMin, T1 InMax, SC_Range<T2> &OutRange, T1 fin)
     {
         return SC::F_Scale(InMin, InMax, OutRange.Val_min, OutRange.Val_max, fin);
     }
 
     template<class T1, class T2>
-    T2 F_Scale(SC_Range<T1> InRange, SC_Range<T2> OutRange, T1 fin)
+    T2 F_Scale(SC_Range<T1> &InRange, SC_Range<T2> &OutRange, T1 fin)
     {
         return SC::F_Scale(InRange.Val_min, InRange.Val_max, OutRange.Val_min, OutRange.Val_max, fin);
     }
